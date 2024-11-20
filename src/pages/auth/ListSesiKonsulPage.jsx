@@ -2,9 +2,12 @@ import React from "react";
 import FormListSesiKonsul from "@/components/fragments/form/formlistsesikonsul";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 
 export default function ListSesiKonsulPage() {
+  const navigate = useNavigate();
+
   return (
     <section className="min-h-screen bg-white flex flex-col">
       <header className="bg-white p-2">
@@ -31,6 +34,12 @@ export default function ListSesiKonsulPage() {
               alt="Profil Dokter"
               className="w-8 h-8 rounded-full border border-gray-300"
             />
+            <button
+            className="bg-red-600 text-white py-1 px-4 rounded-[10px] shadow-md"
+            onClick={() => navigate("/dashboard")}
+          >
+            Keluar
+          </button>
           </div>
         </nav>
       </header>

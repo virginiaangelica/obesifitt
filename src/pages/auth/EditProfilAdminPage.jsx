@@ -8,36 +8,6 @@ import { MdNotifications } from "react-icons/md";
 export default function EditProfilAdminPage() {
   const navigate = useNavigate();
 
-  const handleLogout = (e) => {
-    e.preventDefault();
-
-    Swal.fire({
-      title: "Yakin mau keluar dari akun ini?",
-      showCancelButton: true,
-      confirmButtonText: "Konfirmasi",
-      cancelButtonText: "Batalkan",
-      confirmButtonColor: "#28a745",
-      cancelButtonColor: "#dc3545",
-      reverseButtons: true,
-      html: `
-        <div class="flex flex-col items-center space-y-4">
-          <img src="src/assets/images 2/pop up 1.png" alt="Custom Image" class="mx-auto" style="width: 100px; height: 100px;">
-        </div>
-      `,
-      customClass: {
-        popup: "flex flex-col items-center",
-        title: "text-xl font-semibold text-center",
-        image: "my-4",
-        confirmButton: "bg-green-500 text-white py-2 px-6 rounded-lg mt-4",
-        cancelButton: "bg-red-500 text-white py-2 px-6 rounded-lg mt-4",
-      },
-      preConfirm: () => {
-        navigate("/login-admin");
-        return true;
-      },
-    });
-  };
-
   return (
     <section className="flex flex-col min-h-screen bg-white">
       {/* Navbar */}
@@ -66,6 +36,12 @@ export default function EditProfilAdminPage() {
             alt="Profil Admin"
             className="w-8 h-8 rounded-full border border-gray-300"
           />
+          <button
+            className="bg-red-600 text-white py-1 px-4 rounded-[10px] shadow-md"
+            onClick={() => navigate("/login-admin")}
+          >
+            Keluar
+          </button>
         </div>
       </nav>
 
@@ -97,9 +73,8 @@ export default function EditProfilAdminPage() {
       <footer className="flex justify-start p-12 bg-white">
         <button
           className="bg-[#C90000] text-white py-1 px-8 rounded-[10px]"
-          onClick={handleLogout}
         >
-          Keluar
+          Kembali
         </button>
       </footer>
     </section>

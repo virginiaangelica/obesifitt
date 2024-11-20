@@ -35,6 +35,12 @@ export default function GantiEmailAdminPage() {
             alt="Profil Admin"
             className="w-8 h-8 rounded-full border border-gray-300"
           />
+          <button
+            className="bg-red-600 text-white py-1 px-4 rounded-[10px] shadow-md"
+            onClick={() => navigate("/login-admin")}
+          >
+            Keluar
+          </button>
         </div>
       </nav>
 
@@ -58,7 +64,7 @@ export default function GantiEmailAdminPage() {
       {/* Footer */}
       <footer className="flex justify-start p-12 bg-white shadow-md">
         <button
-          className="bg-[#C90000] text-white py-1 px-8 rounded-[10px]"
+          className="bg-[#C90000] text-white py-2 px-8 rounded-[10px]"
           onClick={() => navigate("/editprofil-admin")}
         >
           Kembali

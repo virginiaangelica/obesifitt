@@ -86,9 +86,6 @@ export default function FormEditProfil() {
 
       <div className="flex flex-col space-y-3 w-full mt-6">
         <div className="flex space-x-4">
-          <Button className="bg-[#FF2020] text-white py-2 px-6 rounded-[10px]">
-            Batalkan
-          </Button>
           <Button
             className="bg-primary text-white py-2 px-7 rounded-[10px]"
             onClick={handleSave} 
