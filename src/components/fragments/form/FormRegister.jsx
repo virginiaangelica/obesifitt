@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { FiArrowLeft } from "react-icons/fi";
 
 export default function FormRegister() {
   const [fullName, setFullName] = useState("");
@@ -30,7 +31,6 @@ export default function FormRegister() {
       confirmPassword: "",
     };
 
-    // Validasi masing-masing field
     if (!fullName) newErrors.fullName = "Nama lengkap wajib diisi";
     if (!email) {
       newErrors.email = "Alamat email wajib diisi";
@@ -52,7 +52,6 @@ export default function FormRegister() {
       newErrors.confirmPassword = "Kata sandi tidak cocok";
     }
 
-    // Jika ada error, set state error
     if (Object.values(newErrors).some((error) => error)) {
       setErrors(newErrors);
       return;
@@ -75,6 +74,14 @@ export default function FormRegister() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3 mt-2">
+      {/* Icon Back */}
+      <button
+        onClick={() => navigate("/dashboard")}
+        className="absolute top-4 left-4 text-xl text-gray-600"
+      >
+        <FiArrowLeft />
+      </button>
+
       <div className="space-y-1">
         <Label htmlFor="fullName">Nama Lengkap</Label>
         <Input
@@ -141,20 +148,20 @@ export default function FormRegister() {
         type="submit"
         className="w-full button-primary text-white text-sm py-1 px-2"
         size="sm"
+        onClick={() => navigate("/register2")}  
       >
         Daftar Sekarang
       </Button>
 
       {/* Tambahkan Button Masuk di sini */}
       <Button
-          className="w-full text-primary font-bold"
-          variant="outline"
-          size="lg"
-          onClick={() => navigate("/login")}  
-        >
-          Sudah punya akun? Masuk Disini
-        </Button>
-
+        className="w-full text-primary font-bold"
+        variant="outline"
+        size="lg"
+        onClick={() => navigate("/login")}  
+      >
+        Sudah punya akun? Masuk Disini
+      </Button>
     </form>
   );
 }

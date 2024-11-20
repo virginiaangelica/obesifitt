@@ -1,7 +1,9 @@
 import { useState } from "react";
+import Swal from "sweetalert2";  // Import SweetAlert2
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";  // Import useNavigate untuk navigasi
 
 export default function FormEmailDokter() {
   const [email, setEmail] = useState("");
@@ -14,6 +16,7 @@ export default function FormEmailDokter() {
     newPassword: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();  // Inisialisasi navigate untuk navigasi
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +46,28 @@ export default function FormEmailDokter() {
 
     // Proses reset kata sandi di sini
     console.log("Password reset submitted!", { email, code, newPassword });
-    // Reset form
+
+    // Menampilkan pop-up setelah berhasil reset password
+    Swal.fire({
+      title: "ObesiFit",  
+      html: `
+        Password anda telah di reset
+        <img src="src/assets/images 2/Pembayaran2.png" alt="Success Image" class="mt-4 mx-auto" style="width: 340px; height: 140px;" />
+      `,
+      confirmButtonText: "Oke",  
+      confirmButtonColor: "#28a745", 
+      customClass: {
+        popup: 'flex flex-col items-center',
+        title: 'text-xl font-semibold text-center',
+        confirmButton: 'bg-green-500 text-white py-2 px-40 rounded-lg mt-4', 
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate('/login-dokter');  
+      }
+    });
+
+    // Reset form setelah submit
     setEmail("");
     setCode("");
     setNewPassword("");
@@ -70,12 +94,6 @@ export default function FormEmailDokter() {
         </div>
         {errors.email && <p className="text-red-500">{errors.email}</p>}
       </div>
-
-      <div className="text-center">
-            <a href="/hape-dokter" className="text-xs font-light text-gray-500">
-              Gunakan nomor handphone?
-            </a>
-          </div>
 
       <div className="space-y-1">
         <Label htmlFor="code">Masukkan Kode</Label>

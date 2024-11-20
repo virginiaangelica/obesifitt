@@ -35,9 +35,7 @@ export default function FormLoginAdmin() {
       return;
     }
 
-    // Proses submit di sini
     console.log("Form submitted!", { email, password });
-    // Reset form
     setEmail("");
     setPassword("");
     setErrors({ email: "", password: "" });
@@ -73,14 +71,6 @@ export default function FormLoginAdmin() {
       <div className="flex flex-col gap-4">
         <Button className="w-full" size="lg" type="submit">
           Masuk
-        </Button>
-        <Button
-          className="w-full text-primary font-bold"
-          variant="outline"
-          size="lg"
-          onClick={() => navigate("/")}
-        >
-          Belum punya akun? Daftar disini
         </Button>
       </div>
     </form>

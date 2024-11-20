@@ -1,29 +1,32 @@
 import { useState } from "react";
+import Swal from "sweetalert2";  // Import SweetAlert2
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";  // Import useNavigate untuk navigasi
 
-export default function FormHape() {
-  const [phone, setPhone] = useState("");
+export default function FormEmailAdmin() {
+  const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({
-    phone: "",
+    email: "",
     code: "",
     newPassword: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();  // Inisialisasi navigate untuk navigasi
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let newErrors = { phone: "", code: "", newPassword: "", confirmPassword: "" };
+    let newErrors = { email: "", code: "", newPassword: "", confirmPassword: "" };
 
-    // Validasi nomor handphone
-    if (!phone) {
-      newErrors.phone = "Nomor handphone wajib diisi";
-    } else if (!/^[0-9]+$/.test(phone)) {
-      newErrors.phone = "Nomor handphone tidak valid";
+    // Validasi email
+    if (!email) {
+      newErrors.email = "Alamat email wajib diisi";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Alamat email tidak valid";
     }
 
     // Validasi kode, kata sandi baru, dan konfirmasi kata sandi
@@ -42,39 +45,55 @@ export default function FormHape() {
     }
 
     // Proses reset kata sandi di sini
-    console.log("Password reset submitted!", { phone, code, newPassword });
-    // Reset form
-    setPhone("");
+    console.log("Password reset submitted!", { email, code, newPassword });
+
+    // Menampilkan pop-up setelah berhasil reset password
+    Swal.fire({
+      title: "ObesiFit",  
+      html: `
+        Password anda telah di reset
+        <img src="src/assets/images 2/Pembayaran2.png" alt="Success Image" class="mt-4 mx-auto" style="width: 340px; height: 140px;" />
+      `,
+      confirmButtonText: "Oke",  
+      confirmButtonColor: "#28a745", 
+      customClass: {
+        popup: 'flex flex-col items-center',
+        title: 'text-xl font-semibold text-center',
+        confirmButton: 'bg-green-500 text-white py-2 px-40 rounded-lg mt-4', 
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Navigate to login page when 'Oke' is clicked on the pop-up
+        navigate('/login-admin');  
+      }
+    });
+
+    // Reset form setelah submit
+    setEmail("");
     setCode("");
     setNewPassword("");
     setConfirmPassword("");
-    setErrors({ phone: "", code: "", newPassword: "", confirmPassword: "" });
+    setErrors({ email: "", code: "", newPassword: "", confirmPassword: "" });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-1">
-        <Label htmlFor="phone">Nomor Handphone</Label>
+        <Label htmlFor="email">Alamat Email</Label>
         <div className="flex space-x-2">
           <Input
-            id="phone"
-            type="text"
-            placeholder="Masukkan nomor handphone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            id="email"
+            type="email"
+            placeholder="Masukkan alamat email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="text-sm py-1 px-2 flex-1"
           />
           <Button type="button" className="text-white text-[13px] py-1 px-2" size="sm">
             Kirim Kode
           </Button>
         </div>
-        {errors.phone && <p className="text-red-500">{errors.phone}</p>}
-      </div>
-
-      <div className="text-center">
-        <a href="/email" className="text-xs font-light text-gray-500">
-          Gunakan alamat email?
-        </a>
+        {errors.email && <p className="text-red-500">{errors.email}</p>}
       </div>
 
       <div className="space-y-1">

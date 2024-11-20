@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import Swal from "sweetalert2";  
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -14,6 +16,7 @@ export default function FormEmail() {
     newPassword: "",
     confirmPassword: "",
   });
+  const navigate = useNavigate();  // Initialize navigate
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,9 +44,31 @@ export default function FormEmail() {
       return;
     }
 
-    // Proses reset kata sandi di sini
+    // Logika reset password
     console.log("Password reset submitted!", { email, code, newPassword });
-    // Reset form
+
+    // Menampilkan pop-up setelah berhasil reset password
+    Swal.fire({
+      title: "ObesiFit",  
+      html: `
+        Password anda telah di reset
+        <img src="src/assets/images 2/Pembayaran2.png" alt="Success Image" class="mt-4 mx-auto" style="width: 340px; height: 140px;" />
+      `,
+      confirmButtonText: "Oke",  
+      confirmButtonColor: "#28a745", 
+      customClass: {
+        popup: 'flex flex-col items-center',
+        title: 'text-xl font-semibold text-center',
+        confirmButton: 'bg-green-500 text-white py-2 px-40 rounded-lg mt-4', 
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        navigate('/login');  
+      }
+    });
+
+    // Reset form setelah submit
     setEmail("");
     setCode("");
     setNewPassword("");
@@ -70,12 +95,6 @@ export default function FormEmail() {
         </div>
         {errors.email && <p className="text-red-500">{errors.email}</p>}
       </div>
-
-      <div className="text-center">
-            <a href="/hape" className="text-xs font-light text-gray-500">
-              Gunakan nomor handphone?
-            </a>
-          </div>
 
       <div className="space-y-1">
         <Label htmlFor="code">Masukkan Kode</Label>

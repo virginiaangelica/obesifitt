@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Swal from "sweetalert2";
+import { FiArrowLeft } from "react-icons/fi";
 
 export default function FormRegisterDokter() {
   const [fullName, setFullName] = useState("");
@@ -66,7 +68,35 @@ export default function FormRegisterDokter() {
       return;
     }
 
-    console.log("Form submitted!", { fullName, email, phone, profession, password, selectedFile });
+    console.log("Form submitted!", {
+      fullName,
+      email,
+      phone,
+      profession,
+      password,
+      selectedFile,
+    });
+
+    Swal.fire({
+      title: "ObesiFit",
+      html: `
+        Admin akan segera mengkonfirmasi pendaftaran anda
+        <img src="src/assets/images 2/Pembayaran2.png" alt="Success Image" class="mt-4 mx-auto" style="width: 340px; height: 140px;" />
+      `,
+      confirmButtonText: "Kembali ke Halaman Register",
+      confirmButtonColor: "#28a745",
+      customClass: {
+        popup: "flex flex-col items-center",
+        title: "text-xl font-semibold text-center",
+        confirmButton: "bg-green-500 text-white py-2 px-35 rounded-lg mt-4",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigate("/register-dokter");
+      }
+    });
+
+    // Reset form
     setFullName("");
     setEmail("");
     setPhone("");
@@ -79,6 +109,13 @@ export default function FormRegisterDokter() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2 mt-3">
+      {/* Icon Back */}
+      <button
+        onClick={() => navigate("/register")}
+        className="absolute top-4 left-4 text-xl text-gray-600"
+      >
+        <FiArrowLeft />
+      </button>
       <div className="space-y-1">
         <Label htmlFor="fullName">Nama Lengkap</Label>
         <Input
@@ -128,7 +165,9 @@ export default function FormRegisterDokter() {
           onChange={(e) => setProfession(e.target.value)}
           className="text-sm py-1 px-2"
         />
-        {errors.profession && <p className="text-red-500">{errors.profession}</p>}
+        {errors.profession && (
+          <p className="text-red-500">{errors.profession}</p>
+        )}
       </div>
 
       <div className="space-y-1">
@@ -160,7 +199,9 @@ export default function FormRegisterDokter() {
       </div>
 
       <div className="space-y-1">
-        <Label htmlFor="fileUpload">Unggah Dokumen Izin Praktik / Sertifikat</Label>
+        <Label htmlFor="fileUpload">
+          Unggah Dokumen Izin Praktik / Sertifikat
+        </Label>
         <Input
           id="fileUpload"
           type="file"
@@ -179,13 +220,13 @@ export default function FormRegisterDokter() {
       </Button>
 
       <Button
-          className="w-full text-primary font-bold"
-          variant="outline"
-          size="lg"
-          onClick={() => navigate("/login-dokter")}  
-        >
-          Sudah punya akun? Masuk Disini
-        </Button>
+        className="w-full text-primary font-bold"
+        variant="outline"
+        size="lg"
+        onClick={() => navigate("/login-dokter")}
+      >
+        Sudah punya akun? Masuk Disini
+      </Button>
     </form>
   );
 }
